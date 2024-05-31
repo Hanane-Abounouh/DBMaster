@@ -1,5 +1,5 @@
 <?php
-require_once 'Product.php';
+require_once './Model/Product.php';
 
 $product = Product::findAll();
 if ($product) {

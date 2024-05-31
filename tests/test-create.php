@@ -1,6 +1,6 @@
 <?php
-require_once 'Product.php';
-require_once 'user.php';
+require_once './Model/Product.php';
+require_once './Model/user.php';
 
 try {
     // Ajouter un nouveau produit

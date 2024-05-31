@@ -1,6 +1,6 @@
 <?php
-require_once 'Database.php';
-require_once 'user.php';
+require_once './Config/Database.php';
+require_once './Model/user.php';
 
 try {
    

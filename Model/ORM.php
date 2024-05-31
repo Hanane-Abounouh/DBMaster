@@ -1,6 +1,6 @@
 <?php
-require_once 'Database.php';
-require_once 'ORMInterface.php';
+require_once './Config/Database.php';
+require_once './Interface/ORMInterface.php';
 
 class ORM implements ORMInterface {
     protected static $table;
@@ -121,5 +121,17 @@ class ORM implements ORMInterface {
         $stmt = Database::getConnection()->prepare($sql);
         return $stmt->execute();
     }
+
+    public static function updateSchema() {
+        // For simplicity, this method will drop and recreate the table
+        $sql = "DROP TABLE IF EXISTS " . static::$table;
+        $stmt = Database::getConnection()->prepare($sql);
+        if ($stmt->execute()) {
+            return static::createTable();
+        }
+        return false;
+    }
+
+    
 }
 ?>
