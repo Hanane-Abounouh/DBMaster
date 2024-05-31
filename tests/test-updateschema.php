@@ -8,10 +8,10 @@ try {
     echo "Initial table 'users' created successfully.\n";
 
     // Insert sample data
-    $user1 = new User(['name' => 'John Doe', 'email' => 'john@example.com', 'password' => 'password123']);
+    $user1 = new User(['name' => 'John Doe', 'email' => 'joh@example.com', 'password' => 'password123']);
     $user1->save();
 
-    $user2 = new User(['name' => 'Jane Smith', 'email' => 'jane@example.com', 'password' => 'password456']);
+    $user2 = new User(['name' => 'Jane Smith', 'email' => 'jan@example.com', 'password' => 'password456']);
     $user2->save();
 
     echo "Sample data inserted successfully.\n";

@@ -1,18 +1,23 @@
 <?php
-require_once './Model/user.php';
+require_once './Model/Product.php';
 
-$password = '1234';
-$hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-$user = new User([
-    'name' => 'bassma',
-    'email' => 'bassma@example.com',
-    'password' =>  $hashedPassword,
-    'address' =>'1234'
-]);
+try {
+    // Créez un nouvel objet Product avec les valeurs à mettre à jour
+    $product = new Product([
+        'id' => 1, // ID de l'enregistrement à mettre à jour
+        'name' => 'Updated Product Name',
+        'price' => 29.99,
+        'quantity' => 50,
+        'description' => 'This product has been updated.'
+    ]);
 
-if ($user->update()) {
-    echo "User updated successfully.";
-} else {
-    echo "Failed to update user.";
+    // Appelez la méthode update() pour mettre à jour l'enregistrement
+    if ($product->update()) {
+        echo "Product updated successfully.\n";
+    } else {
+        echo "Failed to update product.\n";
+    }
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage();
 }
 ?>

@@ -5,18 +5,18 @@ require_once './Model/user.php';
 try {
    
     // Add a new column
-    // if (User::addColumn('address', 'integer')) {
-    //     echo "Column 'address' added successfully.\n";
-    // } else {
-    //     echo "Failed to add column 'address'.\n";
-    // }
+    if (User::addColumn('address', 'integer')) {
+        echo "Column 'address' added successfully.\n";
+    } else {
+        echo "Failed to add column 'address'.\n";
+    }
 
     // Verify the new column exists by inserting data
     $password = '1234';
     $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
     $user = new User([
         'name' => 'bassma',
-        'email' => 'bassma@example.com',
+        'email' => 'bassma2@example.com',
         'password' =>  $hashedPassword,
         'address' =>'123'
     ]);

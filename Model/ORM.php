@@ -23,14 +23,26 @@ class ORM implements ORMInterface {
    
     public function update() {
         $setClause = [];
+        $values = [];
+    
         foreach ($this->attributes as $column => $value) {
-            $setClause[] = "$column = :$column";
+            // Exclure l'ID du tableau des valeurs à mettre à jour
+            if ($column !== 'id') {
+                $setClause[] = "$column = :$column";
+                $values[":$column"] = $value;
+            }
         }
+    
         $setClause = implode(", ", $setClause);
+    
+        // Construire la requête SQL avec le critère WHERE pour l'ID
         $sql = "UPDATE " . static::$table . " SET $setClause WHERE id = :id";
+        $values[':id'] = $this->attributes['id'];
+    
         $stmt = Database::getConnection()->prepare($sql);
-        return $stmt->execute($this->attributes);
+        return $stmt->execute($values);
     }
+    
 
     public function delete() {
         $sql = "DELETE FROM " . static::$table . " WHERE id = :id";
@@ -123,14 +135,28 @@ class ORM implements ORMInterface {
     }
 
     public static function updateSchema() {
+        $oldColumns = self::$columns; // Sauvegarde des anciennes colonnes
+    
         // For simplicity, this method will drop and recreate the table
         $sql = "DROP TABLE IF EXISTS " . static::$table;
         $stmt = Database::getConnection()->prepare($sql);
+    
         if ($stmt->execute()) {
+            // Afficher les modifications de colonnes
+            $addedColumns = array_diff_key(self::$columns, $oldColumns); // Colonnes ajoutées
+            $removedColumns = array_diff_key($oldColumns, self::$columns); // Colonnes supprimées
+            
+            echo "Added columns: \n";
+            print_r($addedColumns);
+            echo "Removed columns: \n";
+            print_r($removedColumns);
+    
+            // Recréer la table
             return static::createTable();
         }
         return false;
     }
+    
 
     
 }
